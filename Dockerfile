@@ -8,7 +8,9 @@ RUN go build -v -o /go/src/app/app main.go
 
 
 FROM ubuntu
+ENV GIN_MODE=release
 COPY --from=build-env /go/src/app/app /app/server
+ADD config.yaml /app
 WORKDIR /app
 EXPOSE 8080
 

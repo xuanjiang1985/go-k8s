@@ -1,8 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -27,6 +30,20 @@ func main() {
 	// router.POST("/user/:name/*action", func(c *gin.Context) {
 	// 	c.FullPath() == "/user/:name/*action" // true
 	// })
+
+	viper.SetConfigFile("config.yaml") // 指定配置文件
+	viper.AddConfigPath("./")          // 指定查找配置文件的路径
+	err := viper.ReadInConfig()        // 读取配置信息
+	if err != nil {                    // 读取配置信息失败
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	}
+	// 监控配置文件变化
+	viper.WatchConfig()
+
+	router.GET("/db/host", func(c *gin.Context) {
+
+		c.String(http.StatusOK, "Database Host: %s", viper.Get("database.host"))
+	})
 
 	router.Run(":8080")
 }
