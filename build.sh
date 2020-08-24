@@ -12,4 +12,5 @@ docker tag goappk8s:${APP_VERSION} registry.cn-hangzhou.aliyuncs.com/zgang/goapp
 
 docker push registry.cn-hangzhou.aliyuncs.com/zgang/goappk8s:${APP_VERSION}
 
+# test this app 
 # docker run -p 8080:8080 -d goappk8s:v0.4.5
